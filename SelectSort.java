@@ -4,7 +4,7 @@ import java.util.Arrays;
 
 public class SelectSort {
     public static void main(String[] args) {
-        //选择排序
+        //选择排序算法
         int[] arr = {104,34,119,1};
         selectSort(arr);
 
