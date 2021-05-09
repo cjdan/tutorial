@@ -52,7 +52,7 @@ class Emp{
 //创建EmpLinkedList
 class EmpLinkedList{
     //头指针，指向第一个雇员，因此链表的head是直接指向第一个雇员
-    private Emp head;//默认null
+    private Emp head ;//默认null
     //添加雇员到链表
     //假定：1.添加雇员时，id自增长，id的分配总是从小到大
     //因此将该雇员加入到本链表的最后即可
@@ -60,15 +60,20 @@ class EmpLinkedList{
         //如果添加第一个雇员
         if(head==null){
             head = emp;
+            return;
         }
-        //如果不是第一个，则添加一个指针，指向最后一个
         Emp curEmp = head;
+
         //到链表的最后
         while (curEmp.next != null) {
             curEmp = curEmp.next;//后移
         }
-        curEmp.next = emp;//添加到链表最后
+        curEmp.next = emp;//添加到链表最后}
+    //如果不是第一个，则添加一个指针，指向最后一个
+
+
     }
+
 
     public void list(){
         if (head==null){
@@ -77,8 +82,9 @@ class EmpLinkedList{
         }
         System.out.println("当前链表为");
         Emp curEmp = head;
-        while (curEmp.next!=null){
-            System.out.println("id = "+curEmp.id+", name = "+curEmp.name);
+        System.out.println("id = "+curEmp.id+", name = "+curEmp.name);
+        while (curEmp.next != null){
+
             curEmp = curEmp.next;
         }
 
