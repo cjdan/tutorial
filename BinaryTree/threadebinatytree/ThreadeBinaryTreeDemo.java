@@ -18,12 +18,16 @@ public class ThreadeBinaryTreeDemo {
         //线索化
         ThreadeBinaryTree threadeBinaryTree = new ThreadeBinaryTree();
         threadeBinaryTree.setRoot(root);
-        threadeBinaryTree.threadeNodes();
+        threadeBinaryTree.threadeNodesLeft();
         //测试，以10节点测试
-        HereNode leftNode = node5.getLeft();
-        HereNode rightNode = node5.getRight();
+        HereNode leftNode = node4.getLeft();
+        HereNode rightNode = node4.getRight();
         System.out.println(leftNode.toString());
         System.out.println(rightNode.toString());
+        //当线索化二叉树后，不能再使用原来的遍历方法
+
+//        //使用线索化的遍历方式
+        threadeBinaryTree.threadeListLeft();
 
     }
 }
@@ -42,6 +46,10 @@ class ThreadeBinaryTree{
     //重载线索化方法
     public void threadeNodes(){
         this.threadeNodes(root);
+    }
+
+    public void threadeNodesLeft(){
+        this.threadeNodesLeft(root);
     }
 
 
@@ -75,6 +83,53 @@ class ThreadeBinaryTree{
             threadeNodes(node.getRight());
         }
     }
+    public void threadeNodesLeft(HereNode node){//前序线索化二叉树
+        //先判断是否为空
+        if(node==null){
+//            System.out.println("节点为空");
+            return;
+        }else {
+
+
+            //1.再线索化当前节点
+            //1.1先处理当前节点的前驱节点
+            if(node.getLeft()==null){
+                //让当前节点的左子针指向前驱节点
+                node.setLeft(pre);
+                //修改当前节点的左子针类型
+                node.setLeftType(1);
+            }
+
+
+
+            //处理后继节点
+
+            if(pre!=null&&pre.getRight()==null){
+                //让前驱节点的右指针指向当前节点
+                pre.setRight(node);
+                //修改前驱节点的右节点类型
+                pre.setRightType(1);
+            }
+            pre = node;
+            if(node.getLeftType()!=1){
+                threadeNodesLeft(node.getLeft());
+            }
+            if(node.getRightType()!=1){
+                threadeNodesLeft(node.getRight());
+            }
+
+
+            //每处理一个节点后，让当前节点是下一个节点的前驱节点
+
+            //1.先线索化左子树
+
+
+            //3.最后线索化右节点
+
+        }
+    }
+
+
     //前序遍历
     public void preOrder(){
 //        System.out.println("当前节点为");
@@ -96,6 +151,67 @@ class ThreadeBinaryTree{
             System.out.println("二叉树为空，无法遍历");
         }
     }
+    //遍历线索化二叉树方法
+    public void threadeList(){//中序遍历
+        //定义一个变量，存储当前节点，从root开始
+        HereNode node = root;
+        int i = 0;
+        while (node!=null){
+            //循环找到lefyType = 1的节点
+            //后面随着遍历而变化，当leftType=1时，该节点是按照线索化处理后的有效节点
+            while(node.getLeftType()==0){
+                node = node.getLeft();
+            }
+            //打印当前节点
+
+
+            System.out.println("第"+(++i)+"个节点："+node);
+            //如果当前节点的右指针指向的是后继节点，就一直输出
+            while (node.getRightType()==1){
+                //获取当前节点的后继节点
+//                i++;
+//                System.out.println("第"+i+"个节点");
+                node = node.getRight();
+                System.out.println("第"+(++i)+"个节点："+node);
+            }
+            //替换这个节点
+            node = node.getRight();
+
+        }
+    }
+
+    public void threadeListLeft(){//前序遍历
+        //定义一个变量，存储当前节点，从root开始
+        HereNode node = root;
+        int i = 0;
+        while (node!=null){
+//            while (node.getLeftType()==0)
+            //循环找到lefyType = 1的节点
+            //后面随着遍历而变化，当leftType=1时，该节点是按照线索化处理后的有效节点
+            System.out.println("第"+(++i)+"个节点："+node);
+            if(node.getLeftType()==0){
+                node = node.getLeft();
+            }else {
+                node = node.getRight();
+            }
+            //打印当前节点
+
+
+
+//            //如果当前节点的右指针指向的是后继节点，就一直输出
+//            while (node.getRightType()==1){
+//                //获取当前节点的后继节点
+////                i++;
+////                System.out.println("第"+i+"个节点");
+//                node = node.getRight();
+//                System.out.println("第"+(++i)+"个节点："+node);
+//            }
+//            //替换这个节点
+//            node = node.getRight();
+
+        }
+    }
+
     public void postOrder(){
 //        System.out.println("当前节点为");
         System.out.println(this);//父节点
@@ -347,18 +463,7 @@ class HereNode {
             return null;
         }
         public void delNode(int no){
-        /*
-        //递归删除结点
-        //1.如果删除的节点是叶子节点，则删除该节点
-        //2.如果删除的节点是非叶子节点，则删除该子树
-        首先，如果根节点为空，直接返回根节点
-        1. 因为我们的二叉树是单向的，所以我们是判断当前结点的子结点是否需要删除结点，而不能去判断 当前这个结点是不是需要删除结点.
-        2. 如果当前结点的左子结点不为空，并且左子结点 就是要删除结点，就将 this.left = null; 并且就返回 (结束递归删除)
-        3. 如果当前结点的右子结点不为空，并且右子结点 就是要删除结点，就将 this.right= null ;并且就返回 (结束递归删除)
-        4. 如果第 2 和第 3 步没有删除结点，那么我们就需要向左子树进行递归删除
-        5. 如果第 4 步也没有删除结点，则应当向右子树进行递归删除.
-         */
-            //2.如果当前结点的左子结点不为空，并且左子结点 就是要删除结点，就将 this.left = null; 并且就返回 (结束递归删除)
+
             if(this.left!=null&&this.left.no==no){
                 this.left = null;
                 return;
