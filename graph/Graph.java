@@ -3,6 +3,7 @@ package tutorial.graph;
 import java.sql.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.LinkedList;
 
 public class Graph {
 
@@ -12,8 +13,8 @@ public class Graph {
     private boolean[] isVisited;//定义数组，记录某个结点是否被访问过
     public static void main(String[] args) {
         //测试代码
-        int n = 5;
-        String[] Vertext ={"A","B","C","D","E"};
+        int n = 6;
+        String[] Vertext ={"A","B","C","D","E","F"};
         //创建图对象
         Graph graph = new Graph(n);
         for(String vertext: Vertext){
@@ -26,11 +27,16 @@ public class Graph {
         graph.insertEdge(1,2,1);//B-C
         graph.insertEdge(1,3,1);//B-D
         graph.insertEdge(1,4,1);//B-E
+        graph.insertEdge(3,4,1);//D-E
+        graph.insertEdge(4,5,1);//E-F
+        graph.insertEdge(3,5,1);//D-F
+        graph.insertEdge(1,5,2);//A-F
+        System.out.println(graph.getWeight(1,5));
         //显示矩阵
         graph.shouGraph();
         //深度优先遍历
         System.out.println("深度优先遍历" );
-        graph.dfs();
+        graph.bfs();
 
 
 
@@ -112,6 +118,44 @@ public class Graph {
         }
     }
 
+    //对一个节点广度优先遍历算法
+    private void bfs(boolean[] isVisited,int i){
+        int u;//队列头结点对应的下标
+        int w;//邻节结点
+        LinkedList<Integer> queue = new LinkedList<>();//队列，结点访问的顺序
+        //访问结点
+        System.out.print(getValueByIndex(i)+"->");
+        //标记已经访问
+        isVisited[i]=true;
+        //将结点加入队列
+        queue.addLast(i);
+        while (!queue.isEmpty()){
+            //取出队列的头结点下标
+            u = queue.removeFirst();
+            //得到第一个邻结点的下标w
+            w = getFirstNeighbor(u);
+            while (w !=- 1){
+                if (!isVisited[w]){
+                    System.out.print(getValueByIndex(w)+"->");
+                    isVisited[w] = true;//标记已访问
+                    queue.addLast(w);//入队列
+                }else {
+                    //以 u 为前驱结点，找到 w 后面的下一个邻结点
+                    w = getNextNeighbor(u,w);//体现广度优先
+                }
+            }
+        }
+    }
+
+    //对bfs进行重载
+    public void bfs(){
+        //遍历所有结点，进行dfs[回溯]
+        for(int i = 0;i < getNumOfVertext();i++){
+            if(!isVisited[i]){
+                bfs(isVisited,i);
+            }
+        }
+    }
 
 
     //插入结点
