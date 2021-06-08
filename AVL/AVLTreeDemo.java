@@ -4,7 +4,7 @@ public class AVLTreeDemo {
     public static void main(String[] args) {
 //        int[] arr = {4,3,6,5,7,8};
 //        int[] arr = {10,12,8,9,7,6};
-        int[] arr = {10,11,2,3,4,5,6,7,8,9,1};
+        int[] arr = {10,11,2,3,4,1};
         //创建一个AVLTree对象
         AVLTree avlTree = new AVLTree();
         //添加节点
@@ -203,7 +203,7 @@ class Node {
         newNode.left = left.right;
         //4.把当前结点的值替换成左子结点的值
         value = left.value;
-        //5.把当前节点的右子树设置成左子树的左子树
+        //5.把当前节点的左子树设置成左子树的左子树
         left = left.left;
         //6.把当前结点的左子结点设置成新的结点
         right  = newNode;
@@ -280,7 +280,7 @@ class Node {
     //返回的是要删除节点的父节点
     public Node searchParent(int value){
         //当前节点就是要删除的节点的父节点，就返回
-        if((this.left != null &&this.left.value == value)||(this.right != null && this.right.value == value)){
+        if((this.left != null && this.left.value == value)||(this.right != null && this.right.value == value)){
             return this;
         }else {
             //如果查找的节点小于当前节点的值，并且当前节点坐子节点不为空
