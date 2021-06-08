@@ -5,17 +5,18 @@ import java.util.List;
 
 public class BinarySearch {
     public static void main(String[] args) {
-        int[] arr = {1,2,3,4,4,5};
-        int value = 6;
+        int[] arr = {1,2,3,4,5};
+        int value = 2;
         System.out.println("index = "+binarySearch1(arr,0,arr.length-1,value));
 
     }
     public static int binarySearch(int[] arr,int left,int right,int value){
-
+//        int length = arr.length;
         if (left>right){
             return -1;
         }
         int mid = (left+right)/2;
+//        while (length)/
         if (arr[mid]==value){
             return mid;
         }else if(arr[mid]>value){
