@@ -4,7 +4,7 @@ import java.util.Arrays;
 
 public class RadixSort {
     public static void main(String[] args) {
-        int[] arr = {53,3,542,748,14,214};
+        int[] arr = {53,3,542,748,14,0,214};
         radixSort(arr);
 
     }
@@ -26,6 +26,9 @@ public class RadixSort {
         int[][] bucket = new int[10][arr.length];
         //为了记录每个桶中，实际存放的数据的个数
         int[] bucketElementsCounts = new int[10];
+        System.out.println("bucketElementsCounts");
+        System.out.println(Arrays.toString(bucketElementsCounts));
+        System.out.println(bucketElementsCounts[0]==0);
         for(int i = 0 , n = 1; i < maxLength; i++, n *= 10) {
             for (int value : arr) {
                 int digitOfElement = value / n % 10;
@@ -46,7 +49,7 @@ public class RadixSort {
                 }
                 bucketElementsCounts[k] = 0;//桶清除，非常重要！！！
             }
-            System.out.println("第"+(i+1)+"轮，对个位的排序处理 arr =" + Arrays.toString(arr));
+            System.out.println("第"+(i+1)+"轮，排序处理 arr =" + Arrays.toString(arr));
         }
 
 //        System.out.println("第一轮");
