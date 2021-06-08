@@ -1,6 +1,6 @@
 package tutorial.BinaryTree;
 
-public class BinaryTreeDemo01 {
+public class BinaryTreeDemo {
     public static void main(String[] args) {
         //测试
         //1.创建一颗二叉树
@@ -10,22 +10,24 @@ public class BinaryTreeDemo01 {
         HereNode node3 = new HereNode(3, "卢俊义");
         HereNode node4 = new HereNode(4, "林冲");
         HereNode node5 = new HereNode(5, "关胜");
+        HereNode node6 = new HereNode(6, "武松");
         //先手动创建二叉树，后面递归创建二叉树
         root.setLeft(node2);
         root.setRight(node3);
-        node3.setRight(node4);
+        node2.setLeft(node4);
         node3.setLeft(node5);
+        node2.setRight(node6);
         binaryTree.setRoot(root);
-        //测试
-//        //1.前序遍历
-//        System.out.println("前序遍历");
-//        binaryTree.preOrder();
-//        //2.中序遍历
-//        System.out.println("中序遍历");
-//        binaryTree.infixOrder();
-//        //3.后序遍历
-//        System.out.println("后序遍历");
-//        binaryTree.postOrder();
+//        测试
+        //1.前序遍历
+        System.out.println("前序遍历");
+        binaryTree.preOrder();
+        //2.中序遍历
+        System.out.println("中序遍历");
+        binaryTree.infixOrder();
+        //3.后序遍历
+        System.out.println("后序遍历");
+        binaryTree.postOrder();
 
         //4.前序查找
 //        int no=2;
@@ -41,13 +43,13 @@ public class BinaryTreeDemo01 {
 //        //后序查找
 //        System.out.println(binaryTree.postOrderSearch(no).toString());
 
-        //4.删除节点
-        int no=1;
-        System.out.println("删除前,前序遍历");
-        binaryTree.preOrder();
-        System.out.println("删除后,前序遍历");
-        binaryTree.delNode(no);
-        binaryTree.preOrder();
+//        //4.删除节点
+//        int no=1;
+//        System.out.println("删除前,前序遍历");
+//        binaryTree.preOrder();
+//        System.out.println("删除后,前序遍历");
+//        binaryTree.delNode(no);
+//        binaryTree.preOrder();
     }
 }
 
@@ -63,7 +65,7 @@ class BinaryTree{
         System.out.println(this);//父节点
         //递归向左子树前序遍历
         if(this.root!=null){
-            this.root.preOrder();//想左递归
+            this.root.preOrder();//向左递归
         }else {
             System.out.println("二叉树为空，无法遍历");
         }
@@ -112,7 +114,7 @@ class BinaryTree{
             return null;
         }
     }
-    public void   delNode(int no){
+    public void  delNode(int no){
         if(root!=null){
             if(root.getNo()==no){
                 root=null;
@@ -214,6 +216,7 @@ class HereNode{
         if(this.left!=null){
             this.left.postOrder();//想左递归
         }
+
 
         //递归向右子树中序遍历
         if(this.right!=null){
